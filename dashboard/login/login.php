@@ -1,6 +1,14 @@
 <?php
-//captura los mensajes a la página
-$message = $_GET['message'] ?? ''; 
+
+//cargar las clases dinamicamente
+
+spl_autoload_register( function ( $class ){
+    include "../../class/Message/$class.class.php";
+});
+
+$message = isset($_GET['message']) && isset($_GET['type']) ? MessageFactory::createMessage($_GET['type']) : '' ;
+$message_out = $message ? $message->getMessage($_GET['message']) : '';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +24,7 @@ $message = $_GET['message'] ?? '';
     <form class="form-signin" method="post" action="validarLogin.php">
         <img class="mb-4" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
-        <?php echo $message; ?>
+        <?php echo $message_out; ?>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" name="email" placeholder="Email address"  autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
