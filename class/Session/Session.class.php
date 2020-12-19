@@ -26,12 +26,21 @@ class Session {
     }
 
     public function issetValue( $value ){
-        return isset($_SESSION[$value]) ? true : false;
+        return isset($_SESSION[$value]);
      }
+
+    public function validateSession( $key ){
+        
+       if(! $this->issetValue($key) ){
+            $this->destroySession();
+            return false;
+        }
+        return true;
+
+    } 
 
     public function destroySession()
     {
-        echo "Sesión eliminada";
         session_unset();
         session_destroy();
     }

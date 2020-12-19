@@ -21,7 +21,9 @@ if (isset($_POST['submit'])) {
     if ($data){
         $session = new Session();
         $session->addValue('email', $data['email']);
-        $session->getValue('email');
+        $session->addValue('id', $data['id']);
+        $session->addValue('usuario', $data['usuario']);
+        header('location: ../dashboard.php');
     }else{
        header('location: login.php?message=Usuario o contraseña incorrectos&type=warningMessage');
     }
